@@ -28,18 +28,13 @@ load_dotenv()
 # --------------------------------------
 st.set_page_config(page_title="Research Bot", layout="wide")
 st.title("🔎 LangChain Research Assistant")
-
-# --------------------------------------
-# Initialize LLM
-# --------------------------------------
+--
 llm = ChatOpenAI(
     model="gpt-4o-mini",
     temperature=0
 )
 
-# --------------------------------------
-# Tool 1 – Web Search
-# --------------------------------------
+
 search = DuckDuckGoSearchRun()
 
 search_tool = Tool(
@@ -48,9 +43,7 @@ search_tool = Tool(
     description="Search the web for up-to-date information."
 )
 
-# --------------------------------------
-# Tool 2 – Wikipedia
-# --------------------------------------
+
 wiki = WikipediaQueryRun(api_wrapper=WikipediaAPIWrapper())
 
 wiki_tool = Tool(
@@ -59,19 +52,13 @@ wiki_tool = Tool(
     description="Search Wikipedia for general knowledge."
 )
 
-# --------------------------------------
-# Tool 3 – Python Tool
-# --------------------------------------
+
 python_tool = PythonREPLTool()
 
-# --------------------------------------
-# Tool 4 – Requests Tool
-# --------------------------------------
+
 requests_tool = RequestsGetTool()
 
-# --------------------------------------
-# Tool 5 – Local Vector Store (RAG)
-# --------------------------------------
+
 documents = [
     Document(page_content="LangChain is a framework for building LLM-powered applications."),
     Document(page_content="Retrieval-Augmented Generation improves factual reliability.")
@@ -97,9 +84,7 @@ rag_tool = Tool(
 # --------------------------------------
 memory = ConversationBufferMemory(memory_key="chat_history")
 
-# --------------------------------------
-# Combine Tools
-# --------------------------------------
+
 tools = [
     search_tool,
     wiki_tool,
@@ -108,9 +93,7 @@ tools = [
     rag_tool
 ]
 
-# --------------------------------------
-# Create Agent
-# --------------------------------------
+
 agent = initialize_agent(
     tools=tools,
     llm=llm,
@@ -119,9 +102,7 @@ agent = initialize_agent(
     verbose=True
 )
 
-# --------------------------------------
-# Chat Interface
-# --------------------------------------
+
 if "messages" not in st.session_state:
     st.session_state.messages = []
 
